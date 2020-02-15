@@ -24,6 +24,10 @@ class Providers extends React.Component {
         .catch(() => this.props.history.push("/"));
   }
 
+  priceFormatter(cell, row){
+  return '<i class="fa fa-rupee"></i> ' + cell;
+}
+
 
 
   render() {
@@ -34,8 +38,8 @@ class Providers extends React.Component {
     const allProviders = (<BootstrapTable data={providers} striped={true} hover={true}>
       <TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>Providers ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}> Name</TableHeaderColumn>
-      <TableHeaderColumn dataField="lowest_price" dataSort={true} >Provider Price</TableHeaderColumn>
-      <TableHeaderColumn dataField="rating" dataSort={true}>Provider Price</TableHeaderColumn>
+      <TableHeaderColumn dataField="lowest_price" dataSort={true} dataFormat={this.priceFormatter} dataAlign='right'>Provider Price</TableHeaderColumn>
+      <TableHeaderColumn dataField="rating" dataSort={true} dataAlign='right'>Provider Price</TableHeaderColumn>
   		</BootstrapTable>);
 
 
