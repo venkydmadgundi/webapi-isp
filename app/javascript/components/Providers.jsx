@@ -11,6 +11,7 @@ class Providers extends React.Component {
     this.state = {
       providers: []
     };
+    this.GetActionFormat= this.GetActionFormat.bind(this);
   }
 
   componentDidMount() {
@@ -27,9 +28,17 @@ class Providers extends React.Component {
         .catch(() => this.props.history.push("/"));
   }
 
-  priceFormatter(cell, row){
-  return '<i class="fa fa-rupee"></i> ' + cell;
-}
+
+  GetActionFormat = (cell, row) => {
+    return (
+       <div>
+           <Link to="/providers/new">Edit${cell}</Link>
+           <button type="button" className="btn btn-outline-danger btn-sm ml-2 ts-buttom" size="sm">
+               Delete
+           </button>
+       </div>
+    );
+  }
 
 
 
@@ -60,6 +69,19 @@ class Providers extends React.Component {
       sort: true,
       align: 'right',
       headerAlign: 'center'
+    }, {
+      text: 'Action',
+      align: 'center',
+      headerAlign: 'center',
+      dataField: "",
+      formatter: (cell, row) => {
+       return(<div>
+       <Link to={`/providers/${row.id}/edit`}>Edit</Link>
+       <button type="button" className="btn btn-outline-danger btn-sm ml-2 ts-buttom" size="sm">
+               Delete
+           </button>
+       </div>);
+      }
     }];
 
     const defaultSorted = [{
@@ -78,6 +100,8 @@ class Providers extends React.Component {
         </h4>
       </div>
     );
+
+    
 
     const allProviders = (<ToolkitProvider
       keyField="id"
