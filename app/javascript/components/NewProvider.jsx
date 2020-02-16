@@ -21,42 +21,42 @@ export default () => (
       <main className="container">
         <div className="text-left mb-3">
           <div className="row">
-            <Form>
+            <Form action="/providers" method="POST">
               <FormGroup>
                 <Label>Name</Label>
-                <Input type="text" name="name" id="providerName" placeholder="Enter name" />
+                <Input type="text" name="provider[name]" id="providerName" placeholder="Enter name" />
               </FormGroup>
               <FormGroup>
                 <Label>Description</Label>
-                <Input type="text" name="description" id="providerDescription" placeholder="Enter description" />
+                <Input type="textarea" name="provider[description]" id="providerDescription" placeholder="Enter description" />
               </FormGroup>
               <FormGroup>
                 <Label>Price</Label>
-                <Input type="text" name="price" id="providerPrice" placeholder="Enter price" />
+                <Input type="text" name="provider[lowest_price]" id="providerPrice" placeholder="Enter price" />
               </FormGroup>
               <FormGroup>
                 <Label>Rating</Label>
-                <Input type="text" name="rating" id="providerRating" placeholder="Enter rating" />
+                <Input type="text" name="provider[rating]" id="providerRating" placeholder="Enter rating" />
               </FormGroup>
               <FormGroup>
                 <Label>Max Speed</Label>
-                <Input type="number" name="speed" id="providerSpeed" placeholder="Enter speed" />
+                <Input type="number" name="provider[max_speed]" id="providerSpeed" placeholder="Enter speed" />
               </FormGroup>
               <FormGroup>
                 <Label>Contact Number</Label>
-                <Input type="number" name="contact" id="providerContact" placeholder="Enter Cotnact Number" />
+                <Input type="number" name="provider[contact_no]" id="providerContact" placeholder="Enter Cotnact Number" />
               </FormGroup>
               <FormGroup>
                 <Label>Email address</Label>
-                <Input type="email" name="email" id="providerEmail" placeholder="Enter email" />
+                <Input type="email" name="provider[email]" id="providerEmail" placeholder="Enter email" />
               </FormGroup>
               <FormGroup>
                 <Label>Image</Label>
-                <Input type="text" name="image" id="providerImage" placeholder="Enter image" />
+                <Input type="text" name="provider[image]" id="providerImage" placeholder="Enter image" />
               </FormGroup>
               <FormGroup>
                 <Label>URL</Label>
-                <Input type="text" name="url" id="providerUrl" placeholder="Enter URL" />
+                <Input type="url" name="provider[url]" id="providerUrl" placeholder="Enter URL" />
               </FormGroup>
               <Button variant="primary" type="submit">
                 Submit

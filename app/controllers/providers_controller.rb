@@ -21,25 +21,38 @@ class ProvidersController < ApplicationController
   def create
     @provider = Provider.new(provider_params)
 
-    if @provider.save
-      render json: @provider, status: :created, location: @provider
-    else
-      render json: @provider.errors, status: :unprocessable_entity
+    respond_to do |format|
+      if @provider.save
+        format.html { redirect_to root_path, notice: 'Provider was successfully created.' }
+        format.json { render :show, status: :created, location: @provider }
+      else
+        format.html { render :new }
+        format.json { render json: @provider.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   # PATCH/PUT /providers/1
   def update
-    if @provider.update(provider_params)
-      render json: @provider
-    else
-      render json: @provider.errors, status: :unprocessable_entity
+
+    respond_to do |format|
+      if @provider.update(provider_params)
+        format.html { redirect_to root_path, notice: 'Provider was successfully updated.' }
+        format.json { render :show, status: :ok, location: @provider }
+      else
+        format.html { render :edit }
+        format.json { render json: @provider.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   # DELETE /providers/1
   def destroy
     @provider.destroy
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: 'Provider was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
   private
