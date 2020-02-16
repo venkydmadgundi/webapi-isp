@@ -24,6 +24,21 @@ class EditProvider extends React.Component {
         .then(response => this.setState({ provider: response }))
         .catch(() => this.props.history.push("/"));
   }
+
+  handleSubmit(data) {
+  console.log(data);
+    return fetch('/providers/' + data.id, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        return res;
+    }).catch(err => err);
+
+  }
+
   render() {
     const sectionStyle = { 
       padding: '2px 0'
@@ -43,7 +58,7 @@ class EditProvider extends React.Component {
           <main className="container">
             <div className="text-left mb-3">
               <div className="row">
-                <Form action={"/providers/"+ provider.id} method="PUT">
+                <Form onSubmit={this.handleSubmit}>
                   <FormGroup>
                     <Label>Name</Label>
                     <Input type="text" name="provider[name]" id="providerName" defaultValue={provider.name} placeholder={provider.name} />

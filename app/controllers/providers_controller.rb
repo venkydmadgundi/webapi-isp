@@ -38,7 +38,7 @@ class ProvidersController < ApplicationController
     respond_to do |format|
       if @provider.update(provider_params)
         format.html { redirect_to root_path, notice: 'Provider was successfully updated.' }
-        format.json { render :show, status: :ok, location: @provider }
+        # format.json { render :show, status: :ok, location: @provider }
       else
         format.html { render :edit }
         format.json { render json: @provider.errors, status: :unprocessable_entity }
