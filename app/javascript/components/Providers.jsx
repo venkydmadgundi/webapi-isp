@@ -67,6 +67,10 @@ class Providers extends React.Component {
       order: 'desc'
     }];
 
+    const sectionStyle = { 
+      padding: '2px 0'
+    }
+
     const noProvider = (
       <div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
         <h4>
@@ -86,7 +90,7 @@ class Providers extends React.Component {
         props => (
           <div>
             <h3>Search field:</h3>
-            <SearchBar  { ...props.searchProps } />
+            <SearchBar  { ...props.searchProps } placeholder="Search by Name/Price/Rating"/>
             <hr />
             <BootstrapTable striped={true} hover={true} 
               { ...props.baseProps }
@@ -100,11 +104,11 @@ class Providers extends React.Component {
     return (
 
     <>
-        <section className="jumbotron jumbotron-fluid text-center">
-          <div className="container py-5">
-            <h1 className="display-4">Providers</h1>
+        <section className="jumbotron jumbotron-fluid text-center" style={sectionStyle}>
+          <div className="container py-2">
+            <h1 className="display-2">Providers</h1>
             <p className="lead text-muted">
-              We’ve pulled together our most popular providers.
+              A list of ISP Providers in India
             </p>
           </div>
         </section>
