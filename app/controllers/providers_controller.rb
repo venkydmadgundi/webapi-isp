@@ -4,12 +4,16 @@ class ProvidersController < ApplicationController
   # GET /providers
   def index
     @providers = Provider.all
-    render json: @providers
   end
 
   # GET /providers/1
   def show
     render json: @provider
+  end
+
+  def all_providers
+    @providers = Provider.all
+    render json: @providers
   end
 
 
