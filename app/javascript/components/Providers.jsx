@@ -15,17 +15,26 @@ class Providers extends React.Component {
   }
 
   componentDidMount() {
-      const url = "/all_providers";
-      fetch(url)
-        .then(response => {
+      this.fetchProvidersList();
+  }
 
+  fetchProvidersList = () => {
+    fetch(`/all_providers`)
+        .then(response => {
           if (response.ok) {
             return response.json();
           }
           throw new Error("Network response was not ok.");
         })
         .then(response => this.setState({ providers: response }))
-        .catch(() => this.props.history.push("/"));
+  };
+
+  handleDelete = (providerId) => {
+    fetch(`/providers/${providerId}`, { method: 'delete' }).
+      then((response) => {
+        alert('Provider deleted successfully')
+        this.fetchProvidersList();
+      });
   }
 
 
@@ -77,9 +86,9 @@ class Providers extends React.Component {
       formatter: (cell, row) => {
        return(<div>
        <Link to={`/providers/${row.id}/edit`}>Edit</Link>
-       <button type="button" className="btn btn-outline-danger btn-sm ml-2 ts-buttom" size="sm">
-               Delete
-           </button>
+       <button type="button" className="btn btn-outline-danger btn-sm ml-2 ts-buttom" size="sm" onClick={() => this.handleDelete(row.id) }>
+       Delete
+       </button>
        </div>);
       }
     }];

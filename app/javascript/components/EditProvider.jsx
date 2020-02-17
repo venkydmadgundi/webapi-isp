@@ -1,19 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, FormGroup, Label, Input } from 'reactstrap';
 
 class EditProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      provider: []
+      name: '',
+      lowest_price: '',
+      rating: '',
+      max_speed: '', 
+      description: '',
+      contact_no: '',
+      email: '',
+      image: '',
+      url: ''
     };
     
   }
 
   componentDidMount() {
-      const url = "/providers/"+this.props.match.params.id;
-      fetch(url)
+      const { match: { params: { id } } } = this.props;
+      fetch(`/providers/${id}`)
         .then(response => {
 
           if (response.ok) {
@@ -21,36 +29,50 @@ class EditProvider extends React.Component {
           }
           throw new Error("Network response was not ok.");
         })
-        .then(response => this.setState({ provider: response }))
-        .catch(() => this.props.history.push("/"));
+        .then((provider) => this.setState({ ...provider }));
   }
 
-  handleSubmit(data) {
-  console.log(data);
-    return fetch('/providers/' + data.id, {
-        method: 'PUT',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(res => {
-        return res;
-    }).catch(err => err);
 
+  updateProvider = (event) => {
+    const paramsData = {
+      name: this.state.name,
+      lowest_price: this.state.lowest_price,
+      rating: this.state.rating,
+      max_speed: this.state.max_speed,
+      description: this.state.description,
+      contact_no: this.state.contact_no,
+      email: this.state.email,
+      image: this.state.image,
+      url: this.state.url
+    }
+
+    fetch(`/providers/${this.state.id}`, {
+      method: 'put',
+      body: JSON.stringify(paramsData),
+      headers: { 'Content-Type': 'application/json' },
+    }).then((response) => {
+      alert('Provider is updated successfully');
+      location.href = '/';
+    });
+  }
+
+  handleInputChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   render() {
     const sectionStyle = { 
       padding: '2px 0'
     }
-    const { provider } = this.state;
+    
+    const {name,lowest_price,rating,max_speed,description,contact_no,email,image,url} = this.state;
     return(
       <>
         <section className="jumbotron jumbotron-fluid text-center" style={sectionStyle}>
           <div className="container py-2">
             <h1 className="display-2">Providers</h1>
             <p className="lead text-muted">
-              Editing {provider.name} ISP Providers in India 
+              Editing ISP Providers in India 
             </p>
           </div>
         </section>
@@ -58,47 +80,47 @@ class EditProvider extends React.Component {
           <main className="container">
             <div className="text-left mb-3">
               <div className="row">
-                <Form onSubmit={this.handleSubmit}>
+
                   <FormGroup>
                     <Label>Name</Label>
-                    <Input type="text" name="provider[name]" id="providerName" defaultValue={provider.name} placeholder={provider.name} />
+                    <Input type="text" name="name" id="providerName" value={name} onChange={this.handleInputChange}/><br/>
                   </FormGroup>
                   <FormGroup>
                     <Label>Description</Label>
-                    <Input type="textarea" name="provider[description]" id="providerDescription" defaultValue={provider.description} placeholder="Enter description" />
+                    <Input type="textarea" name="description" id="providerDescription" value={description}  onChange={this.handleInputChange}/>
                   </FormGroup>
                   <FormGroup>
                     <Label>Price</Label>
-                    <Input type="text" name="provider[lowest_price]" id="providerPrice" defaultValue={provider.lowest_price} placeholder="Enter price" />
+                    <Input type="text" name="lowest_price" id="providerPrice" value={lowest_price}  onChange={this.handleInputChange}/>
                   </FormGroup>
                   <FormGroup>
                     <Label>Rating</Label>
-                    <Input type="text" name="provider[rating]" id="providerRating" defaultValue={provider.rating} placeholder="Enter rating" />
+                    <Input type="text" name="rating" id="providerRating" value={rating} onChange={this.handleInputChange}/>
                   </FormGroup>
                   <FormGroup>
                     <Label>Max Speed</Label>
-                    <Input type="number" name="provider[max_speed]" id="providerSpeed" defaultValue={provider.max_speed} placeholder="Enter speed" />
+                    <Input type="number" name="max_speed" id="providerSpeed" value={max_speed}  onChange={this.handleInputChange}/>
                   </FormGroup>
                   <FormGroup>
                     <Label>Contact Number</Label>
-                    <Input type="number" name="provider[contact_no]" id="providerContact" defaultValue={provider.contact_no} placeholder="Enter Cotnact Number" />
+                    <Input type="number" name="contact_no" id="providerContact" value={contact_no} onChange={this.handleInputChange}/>
                   </FormGroup>
                   <FormGroup>
                     <Label>Email address</Label>
-                    <Input type="email" name="provider[email]" id="providerEmail" defaultValue={provider.email} placeholder="Enter email" />
+                    <Input type="email" name="email" id="providerEmail" value={email}  onChange={this.handleInputChange}/>
                   </FormGroup>
                   <FormGroup>
                     <Label>Image</Label>
-                    <Input type="text" name="provider[image]" id="providerImage" defaultValue={provider.image} placeholder="Enter image" />
+                    <Input type="text" name="image" id="providerImage" value={image} onChange={this.handleInputChange}/>
                   </FormGroup>
                   <FormGroup>
                     <Label>URL</Label>
-                    <Input type="url" name="provider[url]" id="providerUrl" defaultValue={provider.url} placeholder="Enter URL" />
+                    <Input type="url" name="url" id="providerUrl" value={url} onChange={this.handleInputChange}/>
                   </FormGroup>
-                  <Button variant="primary" type="submit">
-                    Submit
+                  <Button variant="primary" type="submit" onClick={this.updateProvider}>
+                    Update
                   </Button>
-                </Form>
+
                   
               </div>
             </div>
