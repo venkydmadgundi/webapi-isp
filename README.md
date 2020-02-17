@@ -1,24 +1,32 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Web API for ISP PRovider
+  ISP Provider.
+  - Use of Web API to create and fetch data
 
-Things you may want to cover:
+**Setting up**
+1. Clone the Repository
 
-* Ruby version
+2. Run the command to install gem dependencies in rails project folder:
+```bash
+bundle install
+```
 
-* System dependencies
+3. Next, run these commands to migrate records and populate the database with seeds.rb:
+```bash
+bundle exec rails db:create db:migrate db:seed
+```
 
-* Configuration
+4. Next start the server with the following command:
+```bash
+rails s
+```
 
-* Database creation
+5. Rails server is up and running now.
 
-* Database initialization
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+**RSpecs**
+```bash
+rspec controller_provider_spec.rb
+rspec model_provider_spec.rb
+```
