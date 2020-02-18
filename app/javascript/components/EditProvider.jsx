@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Input, Table } from 'reactstrap';
 
 class EditProvider extends React.Component {
   constructor(props) {
@@ -81,42 +81,46 @@ class EditProvider extends React.Component {
             <div className="text-left mb-3">
               <div className="row">
 
-                  <FormGroup>
-                    <Label>Name</Label>
-                    <Input type="text" name="name" id="providerName" value={name} onChange={this.handleInputChange}/><br/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Description</Label>
-                    <Input type="textarea" name="description" id="providerDescription" value={description}  onChange={this.handleInputChange}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Price</Label>
-                    <Input type="text" name="lowest_price" id="providerPrice" value={lowest_price}  onChange={this.handleInputChange}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Rating</Label>
-                    <Input type="text" name="rating" id="providerRating" value={rating} onChange={this.handleInputChange}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Max Speed</Label>
-                    <Input type="number" name="max_speed" id="providerSpeed" value={max_speed}  onChange={this.handleInputChange}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Contact Number</Label>
-                    <Input type="number" name="contact_no" id="providerContact" value={contact_no} onChange={this.handleInputChange}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Email address</Label>
-                    <Input type="email" name="email" id="providerEmail" value={email}  onChange={this.handleInputChange}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Image</Label>
-                    <Input type="text" name="image" id="providerImage" value={image} onChange={this.handleInputChange}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>URL</Label>
-                    <Input type="url" name="url" id="providerUrl" value={url} onChange={this.handleInputChange}/>
-                  </FormGroup>
+                  <Table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td><Input type="text" name="name" id="providerName" value={name} onChange={this.handleInputChange}/></td>
+                      </tr>
+                      <tr>
+                        <td>Description</td>
+                        <td><Input type="textarea" name="description" id="providerDescription" value={description}  onChange={this.handleInputChange}/></td>
+                      </tr>
+                      <tr>
+                        <td>Price</td>
+                        <td><Input type="text" name="lowest_price" id="providerPrice" value={lowest_price}  onChange={this.handleInputChange}/></td>
+                      </tr>
+                      <tr>
+                        <td>Rating</td>
+                        <td><Input type="text" name="rating" id="providerRating" value={rating} onChange={this.handleInputChange}/></td>
+                      </tr>
+                      <tr>
+                        <td>Max Speed</td>
+                        <td><Input type="number" name="max_speed" id="providerSpeed" value={max_speed}  onChange={this.handleInputChange}/></td>
+                      </tr>
+                      <tr>
+                        <td>Contact Number</td>
+                        <td><Input type="number" name="contact_no" id="providerContact" value={contact_no} onChange={this.handleInputChange}/></td>
+                      </tr>
+                      <tr>
+                        <td>Email address</td>
+                        <td><Input type="email" name="email" id="providerEmail" value={email}  onChange={this.handleInputChange}/></td>
+                      </tr>
+                      <tr>
+                        <td>Image</td>
+                        <td><Input type="text" name="image" id="providerImage" value={image} onChange={this.handleInputChange}/></td>
+                      </tr>
+                      <tr>
+                        <td>URL</td>
+                        <td><Input type="url" name="url" id="providerUrl" value={url} onChange={this.handleInputChange}/></td>
+                      </tr>
+                    </tbody>
+                  </Table>
                   <Button variant="primary" type="submit" onClick={this.updateProvider}>
                     Update
                   </Button>

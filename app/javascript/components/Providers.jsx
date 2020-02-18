@@ -9,19 +9,19 @@ class Providers extends React.Component {
     this.state = {
       providers: [],
       sort_price: false,
-      sort_rating: false
-
+      sort_rating: false,
+      search: ''
     };
     this.GetActionFormat= this.GetActionFormat.bind(this);
   }
 
   componentDidMount() {
-      this.fetchProvidersList(`/get_providers`);
+      this.fetchProvidersList(`/get_providers`, 'get');
   }
 
 
-  fetchProvidersList = (url) => {
-    fetch(url)
+  fetchProvidersList = (url, http_method) => {
+    fetch(url, { method: http_method })
         .then(response => {
           if (response.ok) {
             return response.json();
@@ -39,8 +39,11 @@ class Providers extends React.Component {
       this.setState({sort_rating : sort });
     }
     const sort_by = sort ? "ASC" : "DESC"
-    const url = `/get_providers?${sort_column}=${sort_by}`;
-    this.fetchProvidersList(url);
+    let url = `/get_providers?${sort_column}=${sort_by}`;
+    if(this.state.search){
+      url += `&search=${this.state.search}`
+    }
+    this.fetchProvidersList(url, 'get');
     
   }
 
@@ -49,14 +52,14 @@ class Providers extends React.Component {
     fetch(`/providers/${providerId}`, { method: 'delete' }).
       then((response) => {
         alert('Provider deleted successfully')
-        this.fetchProvidersList();
+        this.fetchProvidersList(`/get_providers`, 'get');
       });
   }
 
   handleSearchChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-    const url = `/get_providers?search=${event.target.value}`;
-    this.fetchProvidersList(url);
+    this.setState({ search : event.target.value });
+    const url = `/search_providers?search=${event.target.value}`;
+    this.fetchProvidersList(url, 'post');
   }
 
   GetActionFormat = (cell, row) => {
@@ -132,7 +135,7 @@ class Providers extends React.Component {
             </div>
             <div className="row">
             <h3>Search field:</h3>
-            <input type="text" onChange={this.handleSearchChange} className="input" placeholder="Search..." />
+            <input type="text" onChange={this.handleSearchChange} name="search" className="input" placeholder="Search..." />
             <hr/>
               {
               <Table striped bordered hover>

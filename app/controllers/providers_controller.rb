@@ -19,6 +19,12 @@ class ProvidersController < ApplicationController
     render json: @providers
   end
 
+  def search_providers
+    @providers = Provider.all
+    @providers = @providers.providers_search(params[:search]) if params[:search]
+    render json: @providers
+  end
+
 
   # POST /providers
   def create
