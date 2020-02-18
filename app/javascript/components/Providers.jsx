@@ -7,7 +7,10 @@ class Providers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      providers: []
+      providers: [],
+      sort_price: false,
+      sort_rating: false
+
     };
     this.GetActionFormat= this.GetActionFormat.bind(this);
   }
@@ -15,6 +18,7 @@ class Providers extends React.Component {
   componentDidMount() {
       this.fetchProvidersList(`/get_providers`);
   }
+
 
   fetchProvidersList = (url) => {
     fetch(url)
@@ -27,6 +31,20 @@ class Providers extends React.Component {
         .then(response => this.setState({ providers: response }))
   };
 
+  fetchDetails(sort_column, sort) {
+    if(sort_column == "sort_price") {
+      this.setState({sort_price : sort });
+    }
+    else{
+      this.setState({sort_rating : sort });
+    }
+    const sort_by = sort ? "ASC" : "DESC"
+    const url = `/get_providers?${sort_column}=${sort_by}`;
+    this.fetchProvidersList(url);
+    
+  }
+
+
   handleDelete = (providerId) => {
     fetch(`/providers/${providerId}`, { method: 'delete' }).
       then((response) => {
@@ -38,7 +56,6 @@ class Providers extends React.Component {
   handleSearchChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
     const url = `/get_providers?search=${event.target.value}`;
-    console.log(url)
     this.fetchProvidersList(url);
   }
 
@@ -116,14 +133,15 @@ class Providers extends React.Component {
             <div className="row">
             <h3>Search field:</h3>
             <input type="text" onChange={this.handleSearchChange} className="input" placeholder="Search..." />
+            <hr/>
               {
               <Table striped bordered hover>
                 <thead>
                   <tr>
                     <th>#</th>
                     <th>Name</th>
-                    <th>Price</th>
-                    <th>Rating</th>
+                    <th onClick={() => this.fetchDetails("sort_price", !this.state.sort_price)}>Price</th>
+                    <th onClick={() => this.fetchDetails("sort_rating", !this.state.sort_rating)}>Rating</th>
                     <th>Speed</th>
                     <th>Description</th>
                     <th>Contact No</th>
