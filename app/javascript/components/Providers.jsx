@@ -114,26 +114,30 @@ class Providers extends React.Component {
               </Link>
             </div>
             <div className="row">
-              {<Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Rating</th>
-          <th>Speed</th>
-          <th>Description</th>
-          <th>Contact No</th>
-          <th>Email</th>
-          <th>Image</th>
-          <th>URL</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        { this.renderResultRows(providers)}
-      </tbody>
-    </Table>}
+            <h3>Search field:</h3>
+            <input type="text" onChange={this.handleSearchChange} className="input" placeholder="Search..." />
+              {
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Rating</th>
+                    <th>Speed</th>
+                    <th>Description</th>
+                    <th>Contact No</th>
+                    <th>Email</th>
+                    <th>Image</th>
+                    <th>URL</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  { this.renderResultRows(providers)}
+                </tbody>
+              </Table>
+              }
             </div>
           </main>
         </div>
