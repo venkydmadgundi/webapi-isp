@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Table } from 'reactstrap';
+import BootstrapTable from 'react-bootstrap-table-next';
+import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 
+const { SearchBar } = Search;
 
 class Providers extends React.Component {
   constructor(props) {
@@ -38,7 +40,6 @@ class Providers extends React.Component {
   handleSearchChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
     const url = `/get_providers?search=${event.target.value}`;
-    console.log(url)
     this.fetchProvidersList(url);
   }
 
@@ -54,33 +55,53 @@ class Providers extends React.Component {
   }
 
 
-  renderResultRows(data) {
-    return data.map(function(provider) {
-        return (
-            <tr>
-              <td>{provider.id}</td>
-              <td>{provider.name}</td>
-              <td>{provider.lowest_price}</td>
-              <td>{provider.rating}</td>
-              <td>{provider.max_speed}</td>
-              <td>{provider.description}</td>
-              <td>{provider.contact_no}</td>
-              <td>{provider.email}</td>
-              <td>{provider.image}</td>
-              <td>{provider.url}</td>
-              <td><div>
-       <Link to={`/providers/${provider.id}/edit`}>Edit</Link>
-       <button type="button" className="btn btn-outline-danger btn-sm ml-2 ts-buttom" size="sm" onClick={() => this.handleDelete(provider.id) }>
-       Delete
-       </button>
-       </div></td>
-            </tr>
-        );
-    }.bind(this));
-}
 
   render() {
     const { providers } = this.state;
+
+    
+    const columns = [{
+      dataField: 'id',
+      text: 'Provider ID',
+      sort: true,
+      align: 'center',
+      headerAlign: 'center'
+    },{
+      dataField: 'name',
+      text: 'Name',
+      sort: true,
+      headerAlign: 'center'
+    }, {
+      dataField: 'lowest_price',
+      text: 'Price',
+      sort: true,
+      align: 'right',
+      headerAlign: 'center'
+    }, {
+      dataField: 'rating',
+      text: 'Rating',
+      sort: true,
+      align: 'right',
+      headerAlign: 'center'
+    }, {
+      text: 'Action',
+      align: 'center',
+      headerAlign: 'center',
+      dataField: "",
+      formatter: (cell, row) => {
+       return(<div>
+       <Link to={`/providers/${row.id}/edit`}>Edit</Link>
+       <button type="button" className="btn btn-outline-danger btn-sm ml-2 ts-buttom" size="sm" onClick={() => this.handleDelete(row.id) }>
+       Delete
+       </button>
+       </div>);
+      }
+    }];
+
+    const defaultSorted = [{
+      dataField: 'name',
+      order: 'desc'
+    }];
 
     const sectionStyle = { 
       padding: '2px 0'
@@ -93,6 +114,30 @@ class Providers extends React.Component {
         </h4>
       </div>
     );
+
+    
+
+    const allProviders = (<ToolkitProvider
+      keyField="id"
+      data={ providers }
+      columns={ columns }
+      defaultSorted={ defaultSorted }
+      search
+    >
+      {
+        props => (
+          <div>
+            <h3>Search field:</h3>
+            <input type="text" onChange={this.handleSearchChange} className="input" placeholder="Search..." />
+            
+            <hr />
+            <BootstrapTable striped={true} hover={true} 
+              { ...props.baseProps }
+            />
+          </div>
+        )
+      }
+    </ToolkitProvider>)
 
 
     return (
@@ -114,26 +159,7 @@ class Providers extends React.Component {
               </Link>
             </div>
             <div className="row">
-              {<Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Rating</th>
-          <th>Speed</th>
-          <th>Description</th>
-          <th>Contact No</th>
-          <th>Email</th>
-          <th>Image</th>
-          <th>URL</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        { this.renderResultRows(providers)}
-      </tbody>
-    </Table>}
+              {providers.length > 0 ? allProviders : noProvider}
             </div>
           </main>
         </div>

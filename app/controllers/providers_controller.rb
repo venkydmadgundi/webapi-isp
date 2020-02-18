@@ -11,8 +11,11 @@ class ProvidersController < ApplicationController
     render json: @provider
   end
 
-  def all_providers
+  def get_providers
     @providers = Provider.all
+    @providers = @providers.providers_search(params[:search]) if params[:search]
+    @providers = @providers.order(rating: params[:sort_rating]) if params[:sort_rating] && SORT_ORDERS.include?(params[:sort_rating].downcase)
+    @providers = @providers.order(lowest_price: params[:sort_price]) if params[:sort_price] && SORT_ORDERS.include?(params[:sort_price].downcase)
     render json: @providers
   end
 

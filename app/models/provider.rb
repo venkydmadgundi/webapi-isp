@@ -8,4 +8,9 @@ class Provider < ApplicationRecord
               with: URI.regexp(%w[http https]),
               message: 'is not a valid URL'
             }
+
+    scope :providers_search, ->(text){
+		where("lower(name) LIKE ? OR CAST(rating AS TEXT) LIKE ? OR CAST(lowest_price AS TEXT) LIKE ?", "%#{text}%", "%#{text}%", "%#{text}%")
+	}
+
 end
